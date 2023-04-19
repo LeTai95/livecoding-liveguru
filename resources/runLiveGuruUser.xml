@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="LiveGuru - User">
+
+	<listeners>
+		<listener class-name = "commons.MethodListener" />
+		<listener class-name = "reportConfig.ExtentTestListener" />
+		<listener class-name ="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name ="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	<parameter name="enviroment" value="user" />
+
+	<test name="Run on FIREFOX">
+		<parameter name="browser" value="firefox" />
+		
+		Run class -->
+		<!-- <classes>
+			<class name="com.liveguru.user.LiveGuru_User_Role" />
+		</classes> -->
+		
+		<!--Run package-->
+		<packages>
+			<package name="com.liveguru.user" />
+		</packages>
+		</test>
+		
+</suite>
