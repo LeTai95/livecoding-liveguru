@@ -14,14 +14,14 @@
 		<parameter name="browser" value="firefox" />
 		
 		Run class -->
-		<!-- <classes>
+		<classes>
 			<class name="com.liveguru.user.LiveGuru_User_Role" />
-		</classes> -->
+		</classes>
 		
 		<!--Run package-->
-		<packages>
+		<!-- <packages>
 			<package name="com.liveguru.user" />
-		</packages>
+		</packages> -->
 		</test>
 		
 </suite>
