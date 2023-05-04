@@ -3,6 +3,7 @@ package userPageObject;
 import org.openqa.selenium.WebDriver;
 
 import commons.BasePage;
+import commons.PageGeneraterManager;
 import pageUI.liveguru.user.UserShoppingCartPageUIs;
 
 public class UserShoppingCartPO extends BasePage {
@@ -77,5 +78,51 @@ public class UserShoppingCartPO extends BasePage {
 		waitForElementClickable(UserShoppingCartPageUIs.UPDATE_BUTTON);
 		clickToElement(UserShoppingCartPageUIs.UPDATE_BUTTON);
 	}
+
+	public void selectItemInDropdownByDropdownID(String dropdownID, String textItem) {
+		waitForElementVisiable(UserShoppingCartPageUIs.DYNAMIC_DROPDOWN_BY_DROPDOWN_ID, dropdownID);
+		selectItemInDefaultDropdown(UserShoppingCartPageUIs.DYNAMIC_DROPDOWN_BY_DROPDOWN_ID, textItem, dropdownID);
+	}
+
+	public void enterToZipTextbox(String zipNumber) {
+		waitForElementVisiable(UserShoppingCartPageUIs.ZIP_CODE_TEXTBOX);
+		sendkeyToElement(UserShoppingCartPageUIs.ZIP_CODE_TEXTBOX, zipNumber);
+	}
+
+	public void clickToEstimateButton() {
+		waitForElementClickable(UserShoppingCartPageUIs.ESTIMATE_BUTTON);
+		clickToElement(UserShoppingCartPageUIs.ESTIMATE_BUTTON);
+	}
+
+	public void checkToFlatRateRadioButton() {
+		waitForElementClickable(UserShoppingCartPageUIs.FLAT_RATE_RADIO_BUTTON);
+		checkToDefautCheckboxRadio(UserShoppingCartPageUIs.FLAT_RATE_RADIO_BUTTON);
+	}
+
+	public void clickToUpdateTotalButton() {
+		waitForElementClickable(UserShoppingCartPageUIs.UPDATE_TOTAL_BUTTON);
+		clickToElement(UserShoppingCartPageUIs.UPDATE_TOTAL_BUTTON);
+	}
+
+	public String productPriceByColumnNumberAndRowName(String columnNumber, String rowName) {
+		int rowIndex = getElementSize(UserShoppingCartPageUIs.DYNAMIC_ROW_INDEX_BY_ROW_NAME, rowName) + 1;
+		waitForElementVisiable(UserShoppingCartPageUIs.DYNAMIC_PRODUCT_PRICE_BY_ROW_INDEX_AND_COLUMN_NAME,
+				String.valueOf(rowIndex), columnNumber);
+		return getElementText(UserShoppingCartPageUIs.DYNAMIC_PRODUCT_PRICE_BY_ROW_INDEX_AND_COLUMN_NAME,
+				String.valueOf(rowIndex), columnNumber);
+	}
+
+	public UserCheckOutPO clickToProceedToCheckoutButton() {
+		waitForElementClickable(UserShoppingCartPageUIs.PROCEED_TO_CHECK_OUT_BUTTON);
+		clickToElement(UserShoppingCartPageUIs.PROCEED_TO_CHECK_OUT_BUTTON);
+		return PageGeneraterManager.getCheckOutPage(driver);
+	}
+
+	public void clickToCancelButton() {
+		waitForElementClickable(UserShoppingCartPageUIs.CANCEL_BUTTON);
+		clickToElement(UserShoppingCartPageUIs.CANCEL_BUTTON);
+	}
+
+
 
 }
