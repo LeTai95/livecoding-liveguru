@@ -2,6 +2,10 @@ package commons;
 
 import org.openqa.selenium.WebDriver;
 
+import adminPageObject.AdminEditReviewPO;
+import adminPageObject.AdminHomePO;
+import adminPageObject.AdminOrdersPO;
+import userPageObject.UserAdvancedSearchPO;
 import userPageObject.UserCheckOutPO;
 import userPageObject.UserCompareProductsPO;
 import userPageObject.UserHomePO;
@@ -39,4 +43,27 @@ public class PageGeneraterManager {
 	public static UserCheckOutPO getCheckOutPage(WebDriver driver) {
 		return new UserCheckOutPO(driver);
 	}
+	
+	public static UserAdvancedSearchPO getAdvancedSearchPage(WebDriver driver) {
+		return new UserAdvancedSearchPO(driver);
+	}
+	
+	public static AdminHomePO getAdminHomePage(WebDriver driver) {
+		return new AdminHomePO(driver);
+	}
+	
+	public static AdminOrdersPO getAdminOrdersPage(WebDriver driver) {
+		return new AdminOrdersPO(driver);
+	}
+	
+	public static AdminEditReviewPO getAdminEditReviewPage(WebDriver driver) {
+		return new AdminEditReviewPO(driver);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

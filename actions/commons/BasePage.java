@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.File;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -18,6 +19,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import adminPageObject.AdminHomePO;
+import userPageObject.UserHomePO;
 
  
 
@@ -80,23 +84,19 @@ public class BasePage {
 	}
 	
 	public void acceptAlert() {
-		
 		waitForAlertPresence().accept();
 		
 	}
 	
 	public void cancelAlert() {
-		
 		waitForAlertPresence().dismiss();
 	}
 	
 	public String getAlertText() {
-		
 		return waitForAlertPresence().getText();
 	}
 	
 	public void sendkeyToAlert(String textValue) {
-		
 		waitForAlertPresence().sendKeys(textValue);
 	}
 	
@@ -646,6 +646,29 @@ public class BasePage {
 		getWebElement(BasePageUIs.UPLOAD_FILE).sendKeys(fullFileName);
 	}
 	
+	public boolean isFileDownloaded(String fileName) {
+		
+		File fileLocation = new File(GlobalConstants.DOWNLOAD_PATH);
+		File[] totalFiles = fileLocation.listFiles();
+		for (File file : totalFiles) {
+			if (file.getName().contains(fileName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public AdminHomePO openBackEndSite(String BEurl) {
+		openPageUrl(BEurl);
+		return PageGeneraterManager.getAdminHomePage(driver);
+	}
+	
+
+	public UserHomePO openFontEndSite(String FEurl) {
+		openPageUrl(FEurl);
+		return PageGeneraterManager.getUserHomePage(driver);
+	}
 	private long longTimeout = GlobalConstants.LONG_TIME_OUT;
 	private long shortTimeout = GlobalConstants.SHORT_TIME_OUT;
 }

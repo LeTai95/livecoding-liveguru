@@ -25,7 +25,10 @@ public class UserHomePageUIs {
 	public static final String ORDER_RECEIVED_SUCCESS_MESSAGE = "xpath=//h1[text()='Your order has been received.']";
 	public static final String ACCOUNT_MENU = "xpath=//div[@class='account-cart-wrapper']//span[text()='Account']";
 	public static final String MY_WISHLIST = "xpath=//a[contains(text(),'My Wishlist')]";
-
+	public static final String ADVANCED_SEARCH_LINK = "xpath=//a[text()='Advanced Search']";
+	public static final String LOGIN_UNSUCCESS_MESSAGE = "xpath=//li[@class='error-msg']";
+	public static final String REVIEW_TAB = "xpath=//span[text()='Reviews']/parent::li";
+	public static final String PRODUCT_REVIEW_VALUE = "xpath=//div[@class='product-view']//dd[contains(text(),'%s')]";
 
 
 

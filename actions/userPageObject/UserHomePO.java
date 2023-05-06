@@ -102,7 +102,7 @@ public class UserHomePO extends BasePage {
 		clickToElement(UserHomePageUIs.ADD_YOUR_REVIEW_LINK);
 	}
 	
-	public void clickToQualityRadioButtonByValue(String buttonValue) {
+	public void checkToQualityRadioButtonByValue(String buttonValue) {
 		waitForElementClickable(UserHomePageUIs.DYNAMIC_QUALITY_RADIO_BUTTON_BY_VALUE, buttonValue);
 		checkToDefautCheckboxRadio(UserHomePageUIs.DYNAMIC_QUALITY_RADIO_BUTTON_BY_VALUE, buttonValue);
 	}
@@ -146,6 +146,23 @@ public class UserHomePO extends BasePage {
 		waitForElementClickable(UserHomePageUIs.ADD_TO_CART_BUTTON);
 		clickToElement(UserHomePageUIs.ADD_TO_CART_BUTTON);
 		return PageGeneraterManager.getShoppingCartPage(driver);
+	}
+	public UserAdvancedSearchPO clickToAdvancedSearch() {
+		waitForElementClickable(UserHomePageUIs.ADVANCED_SEARCH_LINK);
+		clickToElement(UserHomePageUIs.ADVANCED_SEARCH_LINK);
+		return PageGeneraterManager.getAdvancedSearchPage(driver);
+	}
+	public boolean isLoginUnsuccessMessageDisplayed() {
+		waitForElementVisiable(UserHomePageUIs.LOGIN_UNSUCCESS_MESSAGE);
+		return isElementDisplayed(UserHomePageUIs.LOGIN_UNSUCCESS_MESSAGE);
+	}
+	public void clickToReviewTab() {
+		waitForElementClickable(UserHomePageUIs.REVIEW_TAB);
+		clickToElement(UserHomePageUIs.REVIEW_TAB);
+	}
+	public boolean isReviewDisplay(String reviewValue) {
+		waitForElementVisiable(UserHomePageUIs.PRODUCT_REVIEW_VALUE, reviewValue);
+		return isElementDisplayed(UserHomePageUIs.PRODUCT_REVIEW_VALUE, reviewValue);
 	}
 
 }

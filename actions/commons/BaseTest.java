@@ -87,7 +87,7 @@ public class BaseTest {
 		driver.manage().timeouts().implicitlyWait(GlobalConstants.LONG_TIME_OUT, TimeUnit.SECONDS);
 		return driver;
 	}
-
+	
 	protected WebDriver getBrowserDriver(String browserName, String enviromentName) {
 		BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
 		if (browserList == BrowserList.FIREFOX) {
