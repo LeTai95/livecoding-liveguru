@@ -21,6 +21,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import adminPageObject.AdminHomePO;
+import adminPageObject.AdminOrdersPO;
+import pageUI.liveguru.admin.AdminHomePageUIs;
 import userPageObject.UserHomePO;
 
  
@@ -168,6 +170,11 @@ public class BasePage {
  	public List<WebElement> getListWebElement(String locatorType) {
  		
  		return driver.findElements(getByLocator(locatorType));
+ 	}
+ 	
+ 	public List<WebElement> getListWebElement(String locatorType, String... dynamicValues) {
+ 		
+ 		return driver.findElements(getByLocator(getDynamicXpath(locatorType,dynamicValues)));
  	}
  	
  	public void clickToElement(String locatorType) {
@@ -647,18 +654,110 @@ public class BasePage {
 	}
 	
 	public boolean isFileDownloaded(String fileName) {
-		
-		File fileLocation = new File(GlobalConstants.DOWNLOAD_PATH);
-		File[] totalFiles = fileLocation.listFiles();
-		for (File file : totalFiles) {
-			if (file.getName().contains(fileName)) {
-				return true;
+		if (isFileExists(fileName)) {
+			deleteContainName(fileName);
+		} else {
+			File fileLocation = new File(GlobalConstants.DOWNLOAD_PATH);
+			File[] totalFiles = fileLocation.listFiles();
+			for (File file : totalFiles) {
+				if (file.getName().contains(fileName)) {
+					deleteContainName(fileName);
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
+	public String getPathContainDownload() {
+	String path = "";
+	String machine_name;
+	machine_name = System.getProperty("user.home");
+	path = String.format("%s\\Downloads\\", machine_name);
+	return path;
+	}
 	
+	public void deleteAllFileInFolder() {
+	try {
+	String pathFolderDownload = getPathContainDownload();
+	File file = new File(pathFolderDownload);
+	File[] listOfFiles = file.listFiles();
+	for (int i = 0; i < listOfFiles.length; i++) {
+	if (listOfFiles[i].isFile()) {
+	new File(listOfFiles[i].toString()).delete();
+			}
+		}
+	} catch (Exception e) {
+	System.out.print(e.getMessage());
+		}
+	}
+	
+	public boolean isFileContain(String fileName) {
+	try {
+	boolean flag = false;
+	String pathFolderDownload = getPathContainDownload();
+	File dir = new File(pathFolderDownload);
+	File[] files = dir.listFiles();
+	if (files == null || files.length == 0) {
+	flag = false;
+	}
+	for (int i = 1; i < files.length; i++) {
+	if (files[i].getName().contains(fileName)) {
+	flag = true;
+		}
+	}
+	return flag;
+	} catch (Exception e) {
+	System.out.print(e.getMessage());
+	return false;
+		}
+	}
+	
+	public void deleteFileContainName(String fileName) {
+		deleteContainName(fileName);
+		}
+
+		public void deleteContainName(String fileName) {
+		try {
+		String files;
+		String pathFolderDownload = getPathContainDownload();
+		File file = new File(pathFolderDownload);
+		File[] listOfFiles = file.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+		if (listOfFiles[i].isFile()) {
+		files = listOfFiles[i].getName();
+		if (files.contains(fileName)) {
+		new File(listOfFiles[i].toString()).delete();
+				}
+			}
+		}
+		} catch (Exception e) {
+		System.out.print(e.getMessage());
+			}
+		}
+		
+		public void waitForDownloadFileContainsNameCompleted(String fileName) throws Exception {
+			int i = 0;
+			while (i < GlobalConstants.LONG_TIME_OUT) {
+			boolean exist = isFileContain(fileName);
+			if (exist == true) {
+			i = (int) GlobalConstants.LONG_TIME_OUT;
+			}
+			Thread.sleep(500);
+			i = i + 1;
+				}
+			}
+		public boolean isFileExists(String file) {
+			try {
+			String pathFolderDownload = getPathContainDownload();
+			File files = new File(pathFolderDownload + file);
+			boolean exists = files.exists();
+			return exists;
+			} catch (Exception e) {
+			System.out.print(e.getMessage());
+			return false;
+				}
+			}
 	public AdminHomePO openBackEndSite(String BEurl) {
 		openPageUrl(BEurl);
 		return PageGeneraterManager.getAdminHomePage(driver);
@@ -669,6 +768,24 @@ public class BasePage {
 		openPageUrl(FEurl);
 		return PageGeneraterManager.getUserHomePage(driver);
 	}
+	
+	public BasePage clickToPageByName(String pageName) {
+		waitForElementClickable(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, pageName);
+		clickToElement(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, pageName);
+		switch (pageName) {
+		case "Orders":
+			return PageGeneraterManager.getAdminOrdersPage(driver);
+		case "Pending Reviews":
+			return PageGeneraterManager.getAdminPendingReviewsPage(driver);
+		case "Invoices":
+			return PageGeneraterManager.getAdminInvoicesPage(driver);
+		case "Manage Customers":
+			return PageGeneraterManager.getAdminManageCustomersPage(driver);
+		default:
+			throw new RuntimeException("Invalid page name.");
+		}
+	}
+	
 	private long longTimeout = GlobalConstants.LONG_TIME_OUT;
 	private long shortTimeout = GlobalConstants.SHORT_TIME_OUT;
 }

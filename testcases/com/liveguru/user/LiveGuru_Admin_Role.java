@@ -15,7 +15,10 @@ import com.livegure.data.LiveGuruData;
 
 import adminPageObject.AdminEditReviewPO;
 import adminPageObject.AdminHomePO;
+import adminPageObject.AdminInvoicesPO;
+import adminPageObject.AdminManageCustomersPO;
 import adminPageObject.AdminOrdersPO;
+import adminPageObject.AdminPendingReviewsPO;
 import commons.BaseTest;
 import commons.PageGeneraterManager;
 import reportConfig.ExtentTestManager;
@@ -29,6 +32,9 @@ public class LiveGuru_Admin_Role extends BaseTest {
 	AdminHomePO adminHomePage;
 	AdminOrdersPO adminOrdersPage;
 	AdminEditReviewPO adminEditReviewPage;
+	AdminInvoicesPO adminInvoicesPage;
+	AdminPendingReviewsPO adminPendingReviewsPage;
+	AdminManageCustomersPO adminManageCustomersPage;
 	UserHomePO userHomePage;
 	UserRegisterPO userRegisterPage;
 
@@ -151,10 +157,10 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		adminHomePage = userRegisterPage.openBackEndSite(BEurl);
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Sales'");
-		adminHomePage.hoverToObjectByName("Sales");
+		adminHomePage.hoverToMenuByName("Sales");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Orders'");
-		adminOrdersPage = adminHomePage.clickToObjectByName("Orders");
+		adminOrdersPage = (AdminOrdersPO) adminHomePage.clickToPageByName("Orders");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Select 'Canceled' in 'Status' dropdown");
 		adminOrdersPage.selectItemInDropdownByDropdownID("sales_order_grid_filter_status", "Canceled");
@@ -189,14 +195,20 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Click to 'Submit' button");
 		adminOrdersPage.clickToButtonByName("Submit");
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Get Admin Home Page ID");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Get Admin Home Page ID");
 		String adminHomePageID = driver.getWindowHandle();
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Verify invoice is downloaded");
-		Assert.assertTrue(adminOrdersPage.isInvoiceDownloaded("invoice2023-05-06"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_16: Verify invoice is downloaded");
+		Assert.assertTrue(adminOrdersPage.isInvoiceDownloaded("invoice"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_16: Close invoice tab");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_17: Close invoice tab");
 		adminOrdersPage.closeInvoiceTab(adminHomePageID);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_18: Clear 'Status' dropdown");
+		adminOrdersPage.selectItemInDropdownByDropdownID("sales_order_grid_filter_status", "");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_19: Click to 'Search' button");
+		adminOrdersPage.clickToButtonByName("Search");
 		
 	}
 	
@@ -234,25 +246,25 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		adminHomePage = userHomePage.openBackEndSite(BEurl);
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Hover to 'Catalog' menu");
-		adminHomePage.hoverToObjectByName("Catalog");
+		adminHomePage.hoverToMenuByName("Catalog");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Hover to 'Reviews and Ratings' menu");
-		adminHomePage.hoverToObjectByName("Reviews and Ratings");
+		adminHomePage.hoverToMenuByName("Reviews and Ratings");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Click to 'Pending Reviews'");
-		adminHomePage.clickToObjectByName("Customer Reviews");
+		adminHomePage.hoverToMenuByName("Customer Reviews");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Click to 'Pending Reviews'");
-		adminHomePage.clickToObjectByName("Pending Reviews");
+		adminPendingReviewsPage = (AdminPendingReviewsPO) adminHomePage.clickToPageByName("Pending Reviews");
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Enter to 'Nickname' textbox with value is '" + reviewNickname + "'");
-		adminHomePage.enterToTextboxByName("nickname", reviewNickname);
+		adminPendingReviewsPage.enterToTextboxByName("nickname", reviewNickname);
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_16: Click to 'Search' button");
-		adminHomePage.clickToSearchButton();
+		adminPendingReviewsPage.clickToSearchButton();
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_17: Click to 'Edit' button");
-		adminEditReviewPage = adminHomePage.clickToEditButton();
+		adminEditReviewPage = adminPendingReviewsPage.clickToEditButton();
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_18: Select 'Approved' in 'Status' dropdown");
 		adminEditReviewPage.selectItemByDropdownID("status_id", "Approved");
@@ -279,6 +291,207 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		Assert.assertTrue(userHomePage.isReviewDisplay(reviewValue));
 		
 	}
+	
+	//@Test
+	public void TC_04_Sort_Function(Method method) {
+		ExtentTestManager.startTest(method.getName(), "Verify sort function");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_01: Open BackEnd site");
+		adminHomePage = userHomePage.openBackEndSite(BEurl);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Enter to 'User Name' textbox with value is 'user01'");
+		adminHomePage.enterToTextboxByID("username", "user01");
+
+		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Enter to 'Password' textbox with value is 'guru99com'");
+		adminHomePage.enterToTextboxByID("login", "guru99com");
+
+		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Click to 'Login' button");
+		adminHomePage.clickToLoginButton();
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Close popup");
+		adminHomePage.closePopup();
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Sales'");
+		adminHomePage.hoverToMenuByName("Sales");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Invoices' page");
+		adminInvoicesPage = (AdminInvoicesPO) adminHomePage.clickToPageByName("Invoices");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Click to 'Invoice #' sort option");
+		adminInvoicesPage.clickToSortOptionByColumnName("Invoice #");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Verify 'Invoice #' sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Invoices #"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Click to 'Invoice #'");
+		adminInvoicesPage.clickToSortOptionByColumnName("Invoice #");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 'Invoice #' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Invoices #"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 'Order #' sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Order #"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Click to 'Order #'");
+		adminInvoicesPage.clickToSortOptionByColumnName("Order #");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Verify 'Order #' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Order #"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Verify 'Bill to Name' sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Bill to Name"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Click to 'Bill to Name'");
+		adminInvoicesPage.clickToSortOptionByColumnName("Bill to Name");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Verify 'Bill to Name' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Bill to Name"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Verify 'Amount' sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Amount"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Click to 'Amount'");
+		adminInvoicesPage.clickToSortOptionByColumnName("Amount");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Verify 'Amount' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Amount"));
+		
+	}
+	
+	@Test
+	public void TC_05_Pagination_Function(Method method) {
+		ExtentTestManager.startTest(method.getName(), "Verify pagination function");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_01: Open BackEnd site");
+		adminHomePage = userHomePage.openBackEndSite(BEurl);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Sales'");
+		adminHomePage.hoverToMenuByName("Sales");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Orders'");
+		adminOrdersPage = (AdminOrdersPO) adminHomePage.clickToPageByName("Orders");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Select '20' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("20");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Verify table displayed matching '20'");
+		Assert.assertEquals(adminOrdersPage.numberItemDisplayed(), "20");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Select '30' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("30");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify table displayed matching '30'");
+		Assert.assertEquals(adminOrdersPage.numberItemDisplayed(), "30");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Select '50' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("50");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Verify table displayed matching '50'");
+		Assert.assertEquals(adminOrdersPage.numberItemDisplayed(), "50");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Select '100' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("100");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Verify table displayed matching '100'");
+		Assert.assertEquals(adminOrdersPage.numberItemDisplayed(), "100");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Select '200' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("200");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Verify table displayed matching '200'");
+		Assert.assertEquals(adminOrdersPage.numberItemDisplayed(), "200");
+		
+	}
+	
+	@Test
+	public void TC_06_Search_Function(Method method) {
+		ExtentTestManager.startTest(method.getName(), "Verify search function");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_01: Open BackEnd site");
+		adminHomePage = userHomePage.openBackEndSite(BEurl);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Customers'");
+		adminHomePage.hoverToMenuByName("Customers");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Manage Customers'");
+		adminManageCustomersPage = (AdminManageCustomersPO) adminHomePage.clickToPageByName("Manage Customers");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Enter to 'From' textbox with value is '" + LiveGuruData.AdminData.ID + "'");
+		adminManageCustomersPage.enterToTextboxByTextboxName("entity_id[from]", LiveGuruData.AdminData.ID);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Enter to 'Name' textbox with value is '" + LiveGuruData.AdminData.NAME + "'");
+		adminManageCustomersPage.enterToTextboxByTextboxName("name", LiveGuruData.AdminData.NAME);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Enter to 'Email' textbox with value is '" + LiveGuruData.AdminData.EMAIL + "'");
+		adminManageCustomersPage.enterToTextboxByTextboxName("email", LiveGuruData.AdminData.EMAIL);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Enter to 'Telephone' textbox with value is '" + LiveGuruData.AdminData.PHONE + "'");
+		adminManageCustomersPage.enterToTextboxByTextboxName("Telephone", LiveGuruData.AdminData.PHONE);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Select '" + LiveGuruData.AdminData.COUNTRY + "' in 'Country' dropdown");
+		adminManageCustomersPage.selectItemInDropdownByID("country_id", LiveGuruData.AdminData.COUNTRY);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Enter to 'State/Province' textbox with value is '" + LiveGuruData.AdminData.STATE + "'");
+		adminManageCustomersPage.enterToTextboxByTextboxName("billing_region", LiveGuruData.AdminData.STATE);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Click to 'Manage Customers'");
+		adminManageCustomersPage.clickToSearchButton();
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Verify '" + LiveGuruData.AdminData.ID + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.ID));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Verify '" + LiveGuruData.AdminData.NAME + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.NAME));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Verify '" + LiveGuruData.AdminData.EMAIL + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.EMAIL));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Verify '" + LiveGuruData.AdminData.PHONE + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.PHONE));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Verify '" + LiveGuruData.AdminData.ZIP + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.ZIP));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_16: Verify '" + LiveGuruData.AdminData.COUNTRY + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.COUNTRY));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_17: Verify '" + LiveGuruData.AdminData.STATE + "' is displayed");
+		Assert.assertTrue(adminManageCustomersPage.isCustomerInfoDisplayed(LiveGuruData.AdminData.STATE));
+		
+	}
+	
+	@Test
+	public void TC_07_Select_Checkbox_Function(Method method) {
+		ExtentTestManager.startTest(method.getName(), "Verify checkbox function");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_01: Open BackEnd site");
+		adminHomePage = adminManageCustomersPage.openBackEndSite(BEurl);
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Sales'");
+		adminHomePage.hoverToMenuByName("Sales");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Orders'");
+		adminOrdersPage = (AdminOrdersPO) adminHomePage.clickToPageByName("Orders");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Select '30' in 'Views' dropdown");
+		adminOrdersPage.selectNumberItemDisplay("30");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Click to 'Select Visible' link");
+		adminOrdersPage.clickToLinkByText("Select Visible");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Verify '30 items selected' message is displayed");
+		Assert.assertTrue(adminOrdersPage.isNumberItemSelectedDisplayed("30"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 30 checkbox is selected");
+		Assert.assertEquals(adminOrdersPage.numberCheckboxIsSelected(), "30");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Click to 'Unselect Visible' link");
+		adminOrdersPage.clickToLinkByText("Unselect Visible");
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Verify '0 items selected' message is displayed");
+		Assert.assertTrue(adminOrdersPage.isNumberItemSelectedDisplayed("0"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Verify 0 checkbox is selected");
+		Assert.assertEquals(adminOrdersPage.numberCheckboxIsSelected(), "0");
+		
+	}
+	
 
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {

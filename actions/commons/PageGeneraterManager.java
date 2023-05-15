@@ -4,7 +4,10 @@ import org.openqa.selenium.WebDriver;
 
 import adminPageObject.AdminEditReviewPO;
 import adminPageObject.AdminHomePO;
+import adminPageObject.AdminInvoicesPO;
+import adminPageObject.AdminManageCustomersPO;
 import adminPageObject.AdminOrdersPO;
+import adminPageObject.AdminPendingReviewsPO;
 import userPageObject.UserAdvancedSearchPO;
 import userPageObject.UserCheckOutPO;
 import userPageObject.UserCompareProductsPO;
@@ -60,7 +63,17 @@ public class PageGeneraterManager {
 		return new AdminEditReviewPO(driver);
 	}
 	
+	public static AdminInvoicesPO getAdminInvoicesPage(WebDriver driver) {
+		return new AdminInvoicesPO(driver);
+	}
 	
+	public static AdminPendingReviewsPO getAdminPendingReviewsPage(WebDriver driver) {
+		return new AdminPendingReviewsPO(driver);
+	}
+	
+	public static AdminManageCustomersPO getAdminManageCustomersPage(WebDriver driver) {
+		return new AdminManageCustomersPO(driver);
+	}
 	
 	
 	

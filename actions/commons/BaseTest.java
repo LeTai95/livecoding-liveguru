@@ -42,7 +42,9 @@ public class BaseTest {
 		BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
 		if (browserList == BrowserList.FIREFOX) {
 			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
+			FirefoxOptions options = new FirefoxOptions();
+			options.setCapability("browser.download.alwaysOpenPanel", false);
+			driver = new FirefoxDriver(options);
 		} else if (browserList == BrowserList.SAFARI) {
 			driver = new SafariDriver();
 		}
@@ -60,9 +62,9 @@ public class BaseTest {
 			driver = new ChromeDriver(option);
 		} else if (browserList == BrowserList.CHROME) {
 			WebDriverManager.chromedriver().setup();
-			System.setProperty("webdriver.chrome.args", "--disable-logging");
-			System.setProperty("webdriver.chrome.silentOutput", "true");
-			driver = new ChromeDriver();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("disable-features=DownloadUI");
+			driver = new ChromeDriver(options);
 		} else if (browserList == BrowserList.EDGE) {
 			WebDriverManager.edgedriver().setup();
 			driver = new EdgeDriver();

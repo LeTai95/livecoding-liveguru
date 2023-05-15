@@ -14,7 +14,7 @@ public class GlobalConstants {
 		public static final String DRAG_DROP_HTML5 = PROJECT_PATH + File.separator + "drapDropHTML5";
 		public static final String REPORTNG_SCREENSHOT = PROJECT_PATH + File.separator + "reportNGImages" + File.separator;
 		
-		public static final long LONG_TIME_OUT = 20;
+		public static final long LONG_TIME_OUT = 30;
 		public static final long SHORT_TIME_OUT = 5;
 		public static final long RETRY_TEST_FAIL = 3;
 		

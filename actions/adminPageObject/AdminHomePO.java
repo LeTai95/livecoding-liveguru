@@ -44,10 +44,6 @@ public class AdminHomePO extends BasePage {
 		sendkeyToElement(AdminHomePageUIs.DYNAMIC_TEXTBOX_BY_NAME, textValue, textboxName);
 	}
 
-	public void clickToSearchButton() {
-		waitForElementClickable(AdminHomePageUIs.SEARCH_BUTTON);
-		clickToElement(AdminHomePageUIs.SEARCH_BUTTON);
-	}
 
 	public String customerInfoByColumnNameAndRowNumber(String columnName, String rowNumber) {
 		int columnIndex = getElementSize(AdminHomePageUIs.COLUMN_INDEX_BY_COLUMN_NAME, columnName) + 1;
@@ -78,21 +74,16 @@ public class AdminHomePO extends BasePage {
 		return isElementDisplayed(AdminHomePageUIs.CUSTOMER_INFO_DELETED_SUCCESS_MESSAGE);
 	}
 
-	public void hoverToObjectByName(String menuName) {
+	public void hoverToMenuByName(String menuName) {
 		waitForElementVisiable(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, menuName);
 		hoverMouseToElement(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, menuName);
 	}
 
-	public AdminOrdersPO clickToObjectByName(String objectName) {
-		waitForElementClickable(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, objectName);
-		clickToElement(AdminHomePageUIs.DYNAMIC_OBJECT_BY_NAME, objectName);
-		return PageGeneraterManager.getAdminOrdersPage(driver);
-	}
-
-	public AdminEditReviewPO clickToEditButton() {
-		waitForElementClickable(AdminHomePageUIs.EDIT_BUTTON);
-		clickToElement(AdminHomePageUIs.EDIT_BUTTON);
-		return PageGeneraterManager.getAdminEditReviewPage(driver);
+	public void clickToSearchButton() {
+		waitForElementClickable(AdminHomePageUIs.SEARCH_BUTTON);
+		clickToElement(AdminHomePageUIs.SEARCH_BUTTON);
 	}
  
 }
+
+

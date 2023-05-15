@@ -13,4 +13,14 @@ public class LiveGuruData {
 		public static final String PHONE = "123123123";
 		public static final String ADDRESS = "ABC";
 	}
+	
+	public static class AdminData {
+		public static final String ID = "82995";
+		public static final String NAME = "Jane605892 Doe";
+		public static final String EMAIL = "jane605892doe@gmail.com";
+		public static final String PHONE = "12345678";
+		public static final String ZIP = "542896";
+		public static final String COUNTRY = "United States";
+		public static final String STATE = "Alabama";
+	}
 }

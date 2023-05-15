@@ -19,3 +19,4 @@ public class AdminHomePageUIs {
 	public static final String EDIT_BUTTON = "xpath=//a[text()='Edit']";
 
 }
+
