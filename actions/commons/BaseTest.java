@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +44,6 @@ public class BaseTest {
 		if (browserList == BrowserList.FIREFOX) {
 			WebDriverManager.firefoxdriver().setup();
 			FirefoxOptions options = new FirefoxOptions();
-			options.setCapability("browser.download.alwaysOpenPanel", false);
 			driver = new FirefoxDriver(options);
 		} else if (browserList == BrowserList.SAFARI) {
 			driver = new SafariDriver();
@@ -63,7 +63,6 @@ public class BaseTest {
 		} else if (browserList == BrowserList.CHROME) {
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
-			options.addArguments("disable-features=DownloadUI");
 			driver = new ChromeDriver(options);
 		} else if (browserList == BrowserList.EDGE) {
 			WebDriverManager.edgedriver().setup();

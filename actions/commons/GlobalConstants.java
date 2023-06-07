@@ -13,6 +13,7 @@ public class GlobalConstants {
 		public static final String BROWSER_LOG = PROJECT_PATH + File.separator + "browserLogs";
 		public static final String DRAG_DROP_HTML5 = PROJECT_PATH + File.separator + "drapDropHTML5";
 		public static final String REPORTNG_SCREENSHOT = PROJECT_PATH + File.separator + "reportNGImages" + File.separator;
+		public static final String PROJECT_LOCATION = "D:\\Automation Tester\\LiveCoding-LiveGuru";
 		
 		public static final long LONG_TIME_OUT = 30;
 		public static final long SHORT_TIME_OUT = 5;

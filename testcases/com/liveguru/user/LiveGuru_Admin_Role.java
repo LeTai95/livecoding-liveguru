@@ -292,23 +292,11 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void TC_04_Sort_Function(Method method) {
 		ExtentTestManager.startTest(method.getName(), "Verify sort function");
 		ExtentTestManager.getTest().log(Status.INFO, "Step_01: Open BackEnd site");
 		adminHomePage = userHomePage.openBackEndSite(BEurl);
-		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Enter to 'User Name' textbox with value is 'user01'");
-		adminHomePage.enterToTextboxByID("username", "user01");
-
-		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Enter to 'Password' textbox with value is 'guru99com'");
-		adminHomePage.enterToTextboxByID("login", "guru99com");
-
-		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Click to 'Login' button");
-		adminHomePage.clickToLoginButton();
-		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Close popup");
-		adminHomePage.closePopup();
 		
 		ExtentTestManager.getTest().log(Status.INFO, "Step_02: Hover to 'Sales'");
 		adminHomePage.hoverToMenuByName("Sales");
@@ -316,44 +304,78 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		ExtentTestManager.getTest().log(Status.INFO, "Step_03: Click to 'Invoices' page");
 		adminInvoicesPage = (AdminInvoicesPO) adminHomePage.clickToPageByName("Invoices");
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Click to 'Invoice #' sort option");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_04: Click to 'Invoice #' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Invoice #"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Verify 'Invoice #' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceNumberSortByAscending("Invoice #"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Click to 'Invoice #' for sort descending");
 		adminInvoicesPage.clickToSortOptionByColumnName("Invoice #");
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_05: Verify 'Invoice #' sort by ascending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Invoices #"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 'Invoice #' column sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceNumberSortByDescending("Invoice #"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_06: Click to 'Invoice #'");
-		adminInvoicesPage.clickToSortOptionByColumnName("Invoice #");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Click to 'Order #' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Order #"); 
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 'Invoice #' sort by descending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Invoices #"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Verify 'Order #' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isOrderNumberSortByAscending("Order #"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_07: Verify 'Order #' sort by ascending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Order #"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Click to 'Order #' for sort descending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Order #"); 
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_08: Click to 'Order #'");
-		adminInvoicesPage.clickToSortOptionByColumnName("Order #");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Verify 'Order #' column sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isOrderNumberSortByDescending("Order #"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_09: Verify 'Order #' sort by descending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Order #"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Click to 'Bill to Name' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Bill to Name"); 
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_10: Verify 'Bill to Name' sort by ascending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Bill to Name"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Verify 'Bill to Name' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isBillToNameSortByAscending("Bill to Name"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_11: Click to 'Bill to Name'");
-		adminInvoicesPage.clickToSortOptionByColumnName("Bill to Name");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Click to 'Bill to Name' for sort descending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Bill to Name"); 
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_12: Verify 'Bill to Name' sort by descending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Bill to Name"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Verify 'Bill to Name' column sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isBillToNameSortSortByDescending("Bill to Name"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_13: Verify 'Amount' sort by ascending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByAscendingByColumnName("Amount"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_16: Click to 'Amount' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Amount"); 
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_14: Click to 'Amount'");
-		adminInvoicesPage.clickToSortOptionByColumnName("Amount");
+		ExtentTestManager.getTest().log(Status.INFO, "Step_17: Verify 'Amount' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isAmountSortByAscending("Amount"));
 		
-		ExtentTestManager.getTest().log(Status.INFO, "Step_15: Verify 'Amount' sort by descending");
-		Assert.assertTrue(adminInvoicesPage.isInvoiceInfoSortByDescendingByColumnName("Amount"));
+		ExtentTestManager.getTest().log(Status.INFO, "Step_18: Click to 'Amount' for sort descending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Amount"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_19: Verify 'Amount' column sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isAmountSortByDescending("Amount"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_20: Click to 'Invoice Date' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Invoice Date"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_21: Verify 'Invoice Date' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceDateSortByAscending("Invoice Date"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_22: Click to 'Invoice Date' for sort descending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Invoice Date"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_23: Verify 'Invoice Date' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isInvoiceDateSortByDescending("Invoice Date"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_24: Click to 'Order Date' for sort ascending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Order Date"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_25: Verify 'Order Date' column sort by ascending");
+		Assert.assertTrue(adminInvoicesPage.isOrderDateSortByAscending("Order Date"));
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_26: Click to 'Order Date' for sort descending");
+		adminInvoicesPage.clickToSortOptionByColumnName("Order Date"); 
+		
+		ExtentTestManager.getTest().log(Status.INFO, "Step_27: Verify 'Invoice Date' sort by descending");
+		Assert.assertTrue(adminInvoicesPage.isOrderDateSortByDescending("Order Date"));
+		
 		
 	}
 	
@@ -491,7 +513,6 @@ public class LiveGuru_Admin_Role extends BaseTest {
 		Assert.assertEquals(adminOrdersPage.numberCheckboxIsSelected(), "0");
 		
 	}
-	
 
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {
@@ -499,3 +520,4 @@ public class LiveGuru_Admin_Role extends BaseTest {
 	}
 
 }
+	
